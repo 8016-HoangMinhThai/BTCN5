@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+  <meta charset="UTF-8">
+  <title>My App</title>
+  <link th:fragment="link-css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+<header th:fragment="header">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbar SupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Trang chủ</a></li>
+          <li class="nav-item"> <a class="nav-link" href="/book">Danh sách sách</a></li>
+          <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN')"> <a class="nav-link" href="/categories">Danh mục sách</a></li>
+          <li class="nav-item"sec:authorize="hasAnyAuthority('ADMIN')"><a class="nav-link" href="/book/add">Thêm sách</a></li>
+          <li class="nav-item"sec:authorize="hasAnyAuthority('ADMIN')"><a class="nav-link" href="/categories/add">Thêm danh mục</a></li>
+        </ul>
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
+                        <span class="navbar-text text-dark">Xin chào,
+                            <span sec:authentication="name" style="margin-right: 20px;"></span>
+                        </span>
+          </li>
+          <li class="nav-item" sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+              <button class="btn btn-outline-dark"
+                      type="submit">Logout</button>
+            </form>
+          </li>
+          <li class="nav-item" sec:authorize="!isAuthenticated()">
+            <a class="btn btn-outline-light" href="/login">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<div th:insert="~{::${content}}">
+  <!-- NỘI DUNG TRANG CON--->
+</div>
+<footer th:fragment="footer">
+  <script th:src="@{/js/bootstrap.min.js}"></script>
+</footer>
+</body>
+</html>

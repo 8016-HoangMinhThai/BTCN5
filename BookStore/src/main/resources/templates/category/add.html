@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <th:block th:replace="layout :: link-css"></th:block>
+    <title>Thêm danh mục mới</title>
+</head>
+<body>
+<th:block th:replace="layout :: header"></th:block>
+<div class="container mt-4">
+    <h1>Thêm danh mục mới</h1>
+    <form th:action="@{/categories/add}" th:object="${category}" method="post">
+        <div class="col-6 mb-3">
+            <label class="form-label" for="name">Tên danh mục:</label>
+            <input class="form-control" type="text" th:field="*{name}" id="name">
+            <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Lưu">
+    </form>
+    <br>
+    <a th:href="@{/categories}">Quay lại danh sách</a>
+</div>
+<th:block th:replace="layout :: footer"></th:block>
+</body>
+</html>
